@@ -1,7 +1,7 @@
 /**
- * ARGUS SYSTEM — TikTok Ultra Quality Optimizer (v8.0 AST Pipeline)
+ * ARGUS SYSTEM — TikTok Ultra Quality Optimizer (v2.1 Haze Engine)
  * WebAssembly FFmpeg Container Remuxer combined with
- * client-side brand patcher, language normalization, and sample injection.
+ * client-side brand patcher, HEVC/hev1 conversion, stss alignment, and sample injection.
  */
 
 // ─── TRANSLATION DICTIONARY ─────────────────────────────────────────────────
@@ -9,18 +9,18 @@
 const TRANSLATIONS = {
     en: {
         documentTitle: "ARGUS | TikTok Quality Optimizer",
-        "hero-tag": "OPTIMIZATION_PROTOCOL // ARGUS_V8.0_AST_PIPELINE",
+        "hero-tag": "OPTIMIZATION_PROTOCOL // ARGUS_V2.1_HAZE_ENGINE",
         "hero-title": 'TikTok Quality <span class="accent-text italic">Optimizer.</span>',
-        "hero-desc": "Binary AST pipeline — FFmpeg faststart remux + fake sample injection + chunk offset shifting. Zero re-encoding, maximum quality bypass.",
+        "hero-desc": "Binary AST pipeline v2.1 — FFmpeg faststart remux + HEVC/hvc1 tag patch + fake sample injection. Zero re-encoding, maximum quality bypass.",
         "method-title": "ARGUS PROTOCOL BYPASS",
-        "method-desc": "Full binary AST patcher — restructures MP4 container via FFmpeg faststart, injects fake video samples into chunk tables, and shifts all offsets to bypass platform compression.",
+        "method-desc": "Full binary AST patcher — restructures MP4 container via FFmpeg faststart, normalizes HEVC/H.264 codecs, injects fake video samples into chunk tables, and shifts all offsets to bypass platform compression.",
         "preset-label": "Video Preset:",
         "opt-vertical": "Vertical (9:16)",
         "opt-square": "Square (1:1)",
         "opt-landscape": "Landscape (16:9)",
         "method-recommend": "Recommended: 1080p+ · H.264 / HEVC",
         "warning-title": "AST BINARY PATCHER PROTOCOL",
-        "warning-desc": 'This method uses the full Argus AST engine. It injects fake video samples into your MP4\'s sample tables and shifts all chunk offsets, making the platform treat your file as already optimized.',
+        "warning-desc": 'This method uses the full Argus AST engine v2.1. It normalizes codec headers, injects fake video samples into sample tables, and shifts all chunk offsets so TikTok treats your file as optimized.',
         "drop-title": "Select or drag file to optimize",
         "drop-subtitle": "Argus Container Optimization · Zero Re-encoding",
         "progress-indicator-text": "SYSTEM_OPTIMIZING...",
@@ -36,6 +36,8 @@ const TRANSLATIONS = {
         
         // Dynamic Terminal Logs
         logInit: "Initializing Argus Method: ",
+        logApply: "Starting Argus AST Pipeline (v2.1 Haze Engine)...",
+        logMode: "AST: Mode -> FFmpeg Faststart + Binary Chunk Shifting",
         logRead: "Reading binary stream...",
         logWasmLoad: "WASM: Loading FFmpeg Core Engine...",
         logWasmReady: "✓ FFmpeg Engine Ready",
@@ -52,7 +54,7 @@ const TRANSLATIONS = {
     },
     ar: {
         documentTitle: "آرغوس | نظام تحسين جودة تيك توك",
-        "hero-tag": "بروتوكول التحسين // نظام_آرغوس_V8.0_AST",
+        "hero-tag": "بروتوكول التحسين // نظام_آرغوس_V2.1_HAZE",
         "hero-title": 'مُحسِّن جودة <span class="accent-text italic">تيك توك.</span>',
         "hero-desc": "خط معالجة AST ثنائي — إعادة هيكلة الحاوية السريعة FFmpeg + حقن عينات وهمية + إزاحة فهارس الفيديو. بدون إعادة ترميز، وتجاوز قيود الضغط.",
         "method-title": "تجاوز بروتوكول آرغوس",
@@ -79,6 +81,8 @@ const TRANSLATIONS = {
         
         // Dynamic Terminal Logs
         logInit: "بدء تهيئة بروتوكول آرغوس: ",
+        logApply: "بدء تشغيل خط معالجة آرغوس AST (إصدار Haze Engine v2.1)...",
+        logMode: "AST: النمط -> هيكلة FFmpeg سريعة البدء + إزاحة فهارس الفيديو",
         logRead: "جاري قراءة البيانات الثنائية للملف...",
         logWasmLoad: "WASM: جاري تحميل محرك معالجة FFmpeg Core...",
         logWasmReady: "✓ محرك معالجة FFmpeg جاهز",
@@ -387,6 +391,48 @@ function patchCo64(u8, co64, moovDiff, fakeOffset, fakeSamples) {
   return astBox('co64', out);
 }
 
+function patchSttsTrailingDelta(u8, stts) {
+  const p = payload(u8, stts);
+  const verFlags = p.subarray(0, 4);
+  const entryCount = u32(p, 4);
+  if (entryCount === 0) return raw(u8, stts);
+  
+  const entries = [];
+  for (let i = 0, off = 8; i < entryCount && off + 8 <= p.length; i++, off += 8) {
+    entries.push([u32(p, off), u32(p, off + 4)]);
+  }
+  
+  const lastEntry = entries.pop();
+  if (lastEntry[0] > 1) {
+    entries.push([lastEntry[0] - 1, lastEntry[1]]);
+    entries.push([1, 1]);
+  } else {
+    entries.push([1, 1]);
+  }
+  
+  const out = new Uint8Array(8 + entries.length * 8);
+  out.set(verFlags, 0);
+  out.set(w32(entries.length), 4);
+  for (let i = 0; i < entries.length; i++) {
+    out.set(w32(entries[i][0]), 8 + i * 8);
+    out.set(w32(entries[i][1]), 12 + i * 8);
+  }
+  return astBox('stts', out);
+}
+
+function patchStsdHevcTag(u8, stsd) {
+  const p = payload(u8, stsd);
+  if (p.length < 16) return raw(u8, stsd);
+  const entryType = String.fromCharCode(p[12], p[13], p[14], p[15]);
+  if (entryType === 'hev1') {
+    const newP = new Uint8Array(p);
+    newP[13] = 0x76; // 'v' -> 'hvc1'
+    newP[14] = 0x63; // 'c'
+    return astBox('stsd', newP);
+  }
+  return raw(u8, stsd);
+}
+
 // ─── FFMEPG WASM INSTANTIATOR ───────────────────────────────────────────────
 
 let ffmpegInstance = null;
@@ -516,8 +562,9 @@ async function argusOptimizeVideo(arrayBuffer, onProgress) {
       
       const isVideo = activeTrak === videoTrak;
       
+      if (isVideo && b.type === 'stsd') return patchStsdHevcTag(u8, b);
       if (isVideo && b.type === 'stsz') return patchStsz(u8, b, fakeSamplesCount);
-      if (isVideo && b.type === 'stts') return raw(u8, b);
+      if (isVideo && b.type === 'stts') return patchSttsTrailingDelta(u8, b);
       if (isVideo && b.type === 'stsc' && fakeSamplesCount > 0) return patchStsc(u8, b, originalChunkCount);
       
       if (b.type === 'stco') return patchStco(u8, b, moovDiff, fakeOffset, fakeSamplesCount);
