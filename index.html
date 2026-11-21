@@ -35,13 +35,13 @@
         <!-- Hero Section -->
         <div class="text-center mb-12 max-w-4xl">
             <div id="hero-tag" class="hero-tag inline-block px-3 py-1.5 border border-[#00F0FF]/20 rounded font-mono text-[10px] text-[#00F0FF] mb-6 uppercase tracking-widest bg-[#00F0FF]/5">
-                OPTIMIZATION_PROTOCOL // ARGUS_V2.1_HAZE_ENGINE
+                OPTIMIZATION_PROTOCOL // ARGUS_ENGINE_V6.2
             </div>
             <h1 id="hero-title" class="text-[clamp(2.2rem,6vw,3.8rem)] leading-[1.1] font-extrabold text-white tracking-tight mb-6">
                 TikTok Quality <span class="accent-text italic">Optimizer.</span>
             </h1>
             <p id="hero-desc" class="text-[#8A8A93] text-sm max-w-xl mx-auto leading-relaxed">
-                4K & 120FPS bypass logic for professional creators. Fast MP4 container injection with zero re-encoding loss.
+                Classic v5.5 &amp; Max v6.2 client-side MP4 container engines. Zero video re-encoding, instant browser patching, maximum TikTok quality bypass.
             </p>
         </div>
 
@@ -56,13 +56,24 @@
                             <h3 id="method-title" class="text-white font-bold text-xs uppercase tracking-wider">
                                 ARGUS PROTOCOL BYPASS
                             </h3>
-                            <span class="text-[#00F0FF] font-mono text-[8px] border border-[#00F0FF]/30 px-1.5 py-0.5 rounded bg-[#00F0FF]/5 uppercase tracking-widest font-bold">V8.5_ACTIVE</span>
+                            <span id="engine-version-badge" class="text-[#00F0FF] font-mono text-[8px] border border-[#00F0FF]/30 px-1.5 py-0.5 rounded bg-[#00F0FF]/5 uppercase tracking-widest font-bold">V5.5 // V6.2</span>
                         </div>
                         <p id="method-desc" class="text-[#8A8A93] text-[11px] leading-relaxed">
-                            Consolidated high-fidelity track manipulation. Rewrites structural headers and injects randomized transformation shear bounds to force maximum bitrate preservation.
+                            Choose between Argus Classic (v5.5) for universal SDR/HDR videos with real gallery length, or Argus Max (v6.2) which leaves your video stream 100% untouched for HDR &amp; 4K 60fps.
                         </p>
+                        <!-- ENGINE SELECTOR -->
+                        <div class="preset-selector-container flex items-center gap-3 mt-4 flex-wrap">
+                            <span id="engine-label" class="preset-label text-white text-xs font-bold uppercase tracking-wider">Bypass Engine:</span>
+                            <div class="select-wrapper">
+                                <select id="argus-engine" class="preset-select font-mono cursor-pointer">
+                                    <option id="opt-engine-classic" value="5.5">Argus Classic (v5.5 · Recommended)</option>
+                                    <option id="opt-engine-max" value="6.2">Argus Max (v6.2 · HDR / 4K)</option>
+                                </select>
+                            </div>
+                            <span id="engine-mode-badge" class="auto-badge font-mono text-[9px] text-[#00F0FF] border border-[#00F0FF]/30 px-2 py-0.5 rounded bg-[#00F0FF]/5 font-bold uppercase tracking-wider">ZERO_REENCODE</span>
+                        </div>
                         <!-- FORMAT PRESET OPTIMIZER -->
-                        <div class="preset-selector-container flex items-center gap-3 mt-4">
+                        <div class="preset-selector-container flex items-center gap-3 mt-4 flex-wrap">
                             <span id="preset-label" class="preset-label text-white text-xs font-bold uppercase tracking-wider">Video Preset:</span>
                             <div class="select-wrapper">
                                 <select id="video-preset" class="preset-select font-mono cursor-pointer">
@@ -76,7 +87,7 @@
                     </div>
                     <div class="border-t border-[#1C1C22]/80 pt-4 flex items-center gap-3">
                         <span class="pulse-indicator"></span>
-                        <span id="method-recommend" class="text-[#00F0FF] text-[9px] font-mono uppercase tracking-wider font-bold">Recommended: 1080p 60FPS (Direct Stream)</span>
+                        <span id="method-recommend" class="text-[#00F0FF] text-[9px] font-mono uppercase tracking-wider font-bold">Recommended: 1080p / 4K · H.264 / HEVC + AAC Audio</span>
                     </div>
                 </div>
             </div>
