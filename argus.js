@@ -52,6 +52,9 @@ const TRANSLATIONS = {
         logApply4K: "Starting Argus 4K Engine (Ultra Quality)...",
         logApplyObx: "PATCH: Applying Argus Method (OBX Container Restructure)...",
         logApplyNova: "PATCH: Applying Nova (Patchbox Container Restructure)...",
+        logHwAccelDetected: "✓ WebCodecs GPU Acceleration detected — running high-speed hardware encoder",
+        logHwAccelDone: "✓ Hardware acceleration completed successfully",
+        logWasmFallback: "WebCodecs unavailable — falling back to ultra-fast WASM core...",
         logOptimizeTikTokPrep: "PREP: Staging video for TikTok 1080p Sweet Spot optimization...",
         logOptimizeTikTokExec: "WASM: Encoding to 1080p Level 4.0 (CRF 20 · 160k AAC · Faststart)...",
         logOptimizeTikTokDone: "✓ TikTok optimization profile applied successfully",
@@ -114,6 +117,9 @@ const TRANSLATIONS = {
         logApply4K: "بدء تشغيل محرك آرغوس 4K (جودة فائقة)...",
         logApplyObx: "تعديل الحاوية: تطبيق Argus Method (إعادة هيكلة OBX)...",
         logApplyNova: "تعديل الحاوية: تطبيق Nova (إعادة هيكلة Patchbox)...",
+        logHwAccelDetected: "✓ تم تفعيل تسريع كارت الشاشة (GPU WebCodecs) — جاري الترميز فائق السرعة بالعتاد",
+        logHwAccelDone: "✓ اكتملت المعالجة السريعة عبر كارت الشاشة بنجاح",
+        logWasmFallback: "كارت الشاشة غير متاح — التحويل إلى محرك WASM عالي السرعة...",
         logOptimizeTikTokPrep: "تجهيز: تحضير الفيديو لمعايير تيك توك 1080p الذهبية...",
         logOptimizeTikTokExec: "WASM: الترميز إلى 1080p Level 4.0 (CRF 20 · 160k AAC · Faststart)...",
         logOptimizeTikTokDone: "✓ تم تطبيق بروفايل تيك توك بنجاح تام",
@@ -854,37 +860,81 @@ async function argusOptimizeVideo(fileOrBuffer, config, onProgress) {
 
         if (config.prep === 'optimize_tiktok') {
             logToTerminal(dict.logOptimizeTikTokPrep, 'normal');
-            onProgress(25);
-            const u8Input = new Uint8Array(await inputFile.arrayBuffer());
-            const ffmpeg = await loadFFmpegInstance();
-            await ffmpeg.writeFile('in_cb.mp4', u8Input);
-            logToTerminal(dict.logOptimizeTikTokExec, 'highlight');
-            onProgress(40);
+            onProgress(15);
 
-            // TikTok 1080p sweet spot parameters
-            const exitCode = await ffmpeg.exec([
-                '-y', '-v', 'warning',
-                '-i', 'in_cb.mp4',
-                '-vf', "scale='min(1080,iw)':-2",
-                '-c:v', 'libx264', '-crf', '20', '-level', '4.0', '-preset', 'fast',
-                '-c:a', 'aac', '-b:a', '160k', '-ar', '44100',
-                '-map_metadata', '-1',
-                '-movflags', '+faststart',
-                'out_cb.mp4'
-            ]);
-
-            if (exitCode !== 0) {
-                try { await ffmpeg.deleteFile('in_cb.mp4'); } catch (_) {}
-                throw new Error(currentLang === 'ar' ? 'فشل تحسين الفيديو لـ TikTok عبر FFmpeg' : 'FFmpeg TikTok optimization failed');
-            }
-            onProgress(65);
-            const optimizedU8 = await ffmpeg.readFile('out_cb.mp4');
+            // Attempt WebCodecs hardware GPU acceleration (CompressBase native pipeline)
+            let hardwareOptimizedBlob = null;
             try {
-                await ffmpeg.deleteFile('in_cb.mp4');
-                await ffmpeg.deleteFile('out_cb.mp4');
-            } catch (_) {}
-            targetFile = new File([optimizedU8], inputFile.name || 'optimized.mp4', { type: 'video/mp4' });
-            logToTerminal(dict.logOptimizeTikTokDone, 'success');
+                const { nativeHardwareSupported, nativeOptimize } = await import('./compressbase_chunks/c-tC9SbwDW.js');
+                const isHwSupported = typeof nativeHardwareSupported === 'function' ? await nativeHardwareSupported(inputFile) : false;
+
+                if (isHwSupported && typeof nativeOptimize === 'function') {
+                    logToTerminal(dict.logHwAccelDetected, 'highlight');
+                    hardwareOptimizedBlob = await nativeOptimize(inputFile, {
+                        downscale: true,
+                        preserveQuality: true,
+                        onProgress: (ratio) => {
+                            const pct = ratio > 1 ? ratio : Math.round(ratio * 100);
+                            const dynamicPct = Math.min(75, Math.max(15, Math.round(15 + (pct / 100) * 60)));
+                            onProgress(dynamicPct);
+                        },
+                        onStage: (stage) => {
+                            if (stage) logToTerminal(`GPU Stage: ${stage}`, 'normal');
+                        }
+                    });
+                    logToTerminal(dict.logHwAccelDone, 'success');
+                }
+            } catch (hwErr) {
+                console.warn('WebCodecs GPU acceleration not available or failed:', hwErr);
+            }
+
+            if (hardwareOptimizedBlob) {
+                targetFile = new File([hardwareOptimizedBlob], inputFile.name || 'optimized.mp4', { type: 'video/mp4' });
+            } else {
+                // High-speed fallback via FFmpeg WASM with live dynamic frame progress
+                logToTerminal(dict.logWasmFallback, 'normal');
+                const u8Input = new Uint8Array(await inputFile.arrayBuffer());
+                const ffmpeg = await loadFFmpegInstance();
+
+                const progressHandler = ({ progress }) => {
+                    if (typeof progress === 'number' && progress >= 0 && progress <= 1) {
+                        const dynamicPct = Math.min(75, Math.max(15, Math.round(15 + progress * 60)));
+                        onProgress(dynamicPct);
+                    }
+                };
+                ffmpeg.on('progress', progressHandler);
+
+                await ffmpeg.writeFile('in_cb.mp4', u8Input);
+                logToTerminal(dict.logOptimizeTikTokExec, 'highlight');
+
+                const exitCode = await ffmpeg.exec([
+                    '-y', '-v', 'warning',
+                    '-i', 'in_cb.mp4',
+                    '-vf', "scale='min(1080,iw)':-2",
+                    '-c:v', 'libx264', '-crf', '20', '-level', '4.0', '-preset', 'ultrafast',
+                    '-c:a', 'aac', '-b:a', '160k', '-ar', '44100',
+                    '-map_metadata', '-1',
+                    '-movflags', '+faststart',
+                    'out_cb.mp4'
+                ]);
+
+                try { ffmpeg.off('progress', progressHandler); } catch (_) {}
+
+                if (exitCode !== 0) {
+                    try { await ffmpeg.deleteFile('in_cb.mp4'); } catch (_) {}
+                    throw new Error(currentLang === 'ar' ? 'فشل تحسين الفيديو لـ TikTok عبر FFmpeg' : 'FFmpeg TikTok optimization failed');
+                }
+
+                const optimizedU8 = await ffmpeg.readFile('out_cb.mp4');
+                try {
+                    await ffmpeg.deleteFile('in_cb.mp4');
+                    await ffmpeg.deleteFile('out_cb.mp4');
+                } catch (_) {}
+                targetFile = new File([optimizedU8], inputFile.name || 'optimized.mp4', { type: 'video/mp4' });
+                logToTerminal(dict.logOptimizeTikTokDone, 'success');
+            }
+        } else {
+            onProgress(35);
         }
 
         onProgress(75);
@@ -895,18 +945,24 @@ async function argusOptimizeVideo(fileOrBuffer, config, onProgress) {
             const baseURL = typeof window !== 'undefined' && window.location ? window.location.origin + '/' : '/';
             outputBlob = await patchBoxVideo(targetFile, {
                 assetsBaseURL: baseURL,
-                onStatus: (status) => logToTerminal(`Nova: ${status}`, 'normal')
+                onStatus: (status) => {
+                    logToTerminal(`Nova: ${status}`, 'normal');
+                    onProgress(88);
+                }
             });
         } else {
             // Default: Argus Method (OBX)
             logToTerminal(dict.logApplyObx, 'normal');
             const { patchObx } = await import('./compressbase_chunks/c-B00hGC5w.js');
             outputBlob = await patchObx(targetFile, {
-                onStatus: (status) => logToTerminal(`Argus Method (OBX): ${status}`, 'normal')
+                onStatus: (status) => {
+                    logToTerminal(`Argus Method (OBX): ${status}`, 'normal');
+                    onProgress(88);
+                }
             });
         }
 
-        onProgress(95);
+        onProgress(100);
         const elapsed = ((Date.now() - start) / 1000).toFixed(2);
         const sizeMB = (outputBlob.size / 1048576).toFixed(2);
         logToTerminal(`${dict.logComplete}(${elapsed}s) — ${sizeMB} MB`, 'success');

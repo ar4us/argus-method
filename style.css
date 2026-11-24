@@ -636,3 +636,8 @@ html[dir="rtl"] .preset-select {
 .select-none { user-select: none; -webkit-user-select: none; }
 .flex-1 { flex: 1 1 0%; }
 .mt-0\.5 { margin-top: 0.125rem; }
+
+#argus-progress-bar {
+    transition: width 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
