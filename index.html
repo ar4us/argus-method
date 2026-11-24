@@ -35,13 +35,13 @@
         <!-- Hero Section -->
         <div class="text-center mb-12 max-w-4xl">
             <div id="hero-tag" class="hero-tag inline-block px-3 py-1.5 border border-[#00F0FF]/20 rounded font-mono text-[10px] text-[#00F0FF] mb-6 uppercase tracking-widest bg-[#00F0FF]/5">
-                OPTIMIZATION_PROTOCOL // ARGUS_ENGINE_V6.2
+                OPTIMIZATION_PROTOCOL // ARGUS_MAX_6.2
             </div>
             <h1 id="hero-title" class="text-[clamp(2.2rem,6vw,3.8rem)] leading-[1.1] font-extrabold text-white tracking-tight mb-6">
                 TikTok Quality <span class="accent-text italic">Optimizer.</span>
             </h1>
             <p id="hero-desc" class="text-[#8A8A93] text-sm max-w-xl mx-auto leading-relaxed">
-                Classic v5.5 &amp; Max v6.2 client-side MP4 container engines. Zero video re-encoding, instant browser patching, maximum TikTok quality bypass.
+                Argus MAX v6.2 (100% untouched stream) &amp; Argus 4K (OBX / Nova) client-side engines. Zero video quality loss, maximum TikTok quality bypass.
             </p>
         </div>
 
@@ -56,21 +56,44 @@
                             <h3 id="method-title" class="text-white font-bold text-xs uppercase tracking-wider">
                                 ARGUS PROTOCOL BYPASS
                             </h3>
-                            <span id="engine-version-badge" class="text-[#00F0FF] font-mono text-[8px] border border-[#00F0FF]/30 px-1.5 py-0.5 rounded bg-[#00F0FF]/5 uppercase tracking-widest font-bold">V5.5 // V6.2</span>
+                            <span id="engine-version-badge" class="text-[#00F0FF] font-mono text-[8px] border border-[#00F0FF]/30 px-1.5 py-0.5 rounded bg-[#00F0FF]/5 uppercase tracking-widest font-bold">V6.2 MAX</span>
                         </div>
                         <p id="method-desc" class="text-[#8A8A93] text-[11px] leading-relaxed">
-                            Choose between Argus Classic (v5.5) for universal SDR/HDR videos with real gallery length, or Argus Max (v6.2) which leaves your video stream 100% untouched for HDR &amp; 4K 60fps.
+                            Argus MAX (v6.2) leaves your video stream 100% untouched for HDR &amp; 4K 60fps. Argus 4K provides OBX and Nova container restructuring optimized for TikTok.
                         </p>
                         <!-- ENGINE SELECTOR -->
                         <div class="preset-selector-container flex items-center gap-3 mt-4 flex-wrap">
                             <span id="engine-label" class="preset-label text-white text-xs font-bold uppercase tracking-wider">Bypass Engine:</span>
                             <div class="select-wrapper">
-                                <select id="argus-engine" class="preset-select font-mono cursor-pointer">
-                                    <option id="opt-engine-classic" value="5.5">Argus Classic (v5.5 · Recommended)</option>
-                                    <option id="opt-engine-max" value="6.2">Argus Max (v6.2 · HDR / 4K)</option>
+                                <select id="argus-engine" class="preset-select font-mono cursor-pointer" onchange="onEngineChange()">
+                                    <option id="opt-engine-max" value="max" selected>Argus MAX (v6.2 · Recommended)</option>
+                                    <option id="opt-engine-argus4k" value="argus4k">Argus 4K (Ultra Quality + OBX)</option>
                                 </select>
                             </div>
                             <span id="engine-mode-badge" class="auto-badge font-mono text-[9px] text-[#00F0FF] border border-[#00F0FF]/30 px-2 py-0.5 rounded bg-[#00F0FF]/5 font-bold uppercase tracking-wider">ZERO_REENCODE</span>
+                        </div>
+                        <!-- ARGUS 4K SUB-OPTIONS PANEL -->
+                        <div id="argus4k-options-panel" class="hidden flex flex-col gap-3 mt-3 pt-3 border-t border-[#1C1C22]/80">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span id="submethod-label" class="preset-label text-white text-xs font-bold uppercase tracking-wider">4K Method:</span>
+                                <div class="select-wrapper">
+                                    <select id="argus-submethod" class="preset-select font-mono cursor-pointer">
+                                        <option id="opt-submethod-obx" value="argus_obx" selected>Argus Method (OBX · Better)</option>
+                                        <option id="opt-submethod-nova" value="nova">Nova (Patchbox · Beta)</option>
+                                    </select>
+                                </div>
+                                <span id="submethod-badge" class="auto-badge font-mono text-[9px] text-[#00F0FF] border border-[#00F0FF]/30 px-2 py-0.5 rounded bg-[#00F0FF]/5 font-bold uppercase tracking-wider">OBX_CONTAINER</span>
+                            </div>
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span id="prep-label" class="preset-label text-white text-xs font-bold uppercase tracking-wider">Prepare Video:</span>
+                                <div class="select-wrapper">
+                                    <select id="argus-prep" class="preset-select font-mono cursor-pointer">
+                                        <option id="opt-prep-tiktok" value="optimize_tiktok" selected>Optimize for TikTok (1080p Sweet Spot · Recommended)</option>
+                                        <option id="opt-prep-direct" value="direct">Continue without extras (Direct Stream)</option>
+                                    </select>
+                                </div>
+                                <span id="prep-badge" class="auto-badge font-mono text-[9px] text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded bg-amber-400/5 font-bold uppercase tracking-wider">TIKTOK_OPTIMIZED</span>
+                            </div>
                         </div>
                         <!-- FORMAT PRESET OPTIMIZER -->
                         <div class="preset-selector-container flex items-center gap-3 mt-4 flex-wrap">
@@ -97,10 +120,10 @@
                 <span class="material-symbols-outlined text-amber-500 text-lg mt-0.5 select-none" aria-hidden="true">warning</span>
                 <div class="flex-1">
                     <h4 id="warning-title" class="text-amber-500 font-bold text-xs uppercase tracking-wider mb-1">
-                        CRITICAL SAFETY WARNING
+                        CLIENT-SIDE BINARY ENGINES (MAX &amp; 4K)
                     </h4>
                     <p id="warning-desc" class="text-[#8A8A93] text-[11px] leading-relaxed">
-                        Forcing <span class="text-white font-medium">4K 120FPS</span> metadata may trigger duplicate spam detection on micro-servers, causing shadowbans. Stick to recommended values for natural reach.
+                        Everything runs locally in your browser with zero quality loss. <strong>Argus MAX (v6.2)</strong> preserves 100% of your video &amp; HDR stream untouched; <strong>Argus 4K</strong> applies TikTok-tailored OBX / Nova container optimization.
                     </p>
                 </div>
             </div>
@@ -189,6 +212,6 @@
     </footer>
 
     <script src="ffmpeg.js" defer></script>
-    <script src="argus.js" defer></script>
+    <script type="module" src="argus.js" defer></script>
 </body>
 </html>

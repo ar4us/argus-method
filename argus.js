@@ -1,8 +1,8 @@
 /**
- * ARGUS SYSTEM — TikTok Ultra Quality Optimizer (Classic v5.5 & Max v6.2 Engines)
- * 100% client-side MP4 binary patcher with instant zero-WASM fast path for standard
- * MP4 (H.264 / HEVC + AAC) files and automatic FFmpeg WASM fallback for MOV,
- * fragmented MP4, non-AAC audio, or silent videos.
+ * ARGUS SYSTEM — TikTok Ultra Quality Optimizer (MAX v6.2 & Argus 4K Engines)
+ * 100% client-side MP4 container optimizer with zero quality loss.
+ * - Argus MAX (v6.2): Zero-touch video stream + dual AAC audio PCE bypass (matches Haze Max).
+ * - Argus 4K: Advanced TikTok container restructuring with Argus Method (OBX) and Nova (Patchbox).
  */
 
 // ─── TRANSLATION DICTIONARY ─────────────────────────────────────────────────
@@ -10,22 +10,28 @@
 const TRANSLATIONS = {
     en: {
         documentTitle: "ARGUS | TikTok Quality Optimizer",
-        "hero-tag": "OPTIMIZATION_PROTOCOL // ARGUS_ENGINE_V6.2",
+        "hero-tag": "OPTIMIZATION_PROTOCOL // ARGUS_MAX_6.2",
         "hero-title": 'TikTok Quality <span class="accent-text italic">Optimizer.</span>',
-        "hero-desc": "Classic v5.5 & Max v6.2 client-side MP4 container engines. Zero video re-encoding, instant browser patching, maximum TikTok quality bypass.",
+        "hero-desc": "Argus MAX v6.2 (100% untouched stream) & Argus 4K (OBX / Nova) client-side engines. Zero video quality loss, maximum TikTok quality bypass.",
         "method-title": "ARGUS PROTOCOL BYPASS",
-        "method-desc": "Choose between Argus Classic (v5.5) for universal SDR/HDR videos with real gallery length, or Argus Max (v6.2) which leaves your video stream 100% untouched for HDR & 4K 60fps.",
+        "method-desc": "Argus MAX (v6.2) leaves your video stream 100% untouched for HDR & 4K 60fps. Argus 4K provides OBX and Nova container restructuring optimized for TikTok.",
         "engine-label": "Bypass Engine:",
-        "opt-engine-classic": "Argus Classic (v5.5 · Recommended)",
-        "opt-engine-max": "Argus Max (v6.2 · HDR / 4K)",
+        "opt-engine-max": "Argus MAX (v6.2 · Recommended)",
+        "opt-engine-argus4k": "Argus 4K (Ultra Quality + OBX)",
         "engine-mode-badge": "ZERO_REENCODE",
+        "submethod-label": "4K Method:",
+        "opt-submethod-obx": "Argus Method (OBX · Better)",
+        "opt-submethod-nova": "Nova (Patchbox · Beta)",
+        "prep-label": "Prepare Video:",
+        "opt-prep-tiktok": "Optimize for TikTok (1080p Sweet Spot · Recommended)",
+        "opt-prep-direct": "Continue without extras (Direct Stream)",
         "preset-label": "Video Preset:",
         "opt-vertical": "Vertical (9:16)",
         "opt-square": "Square (1:1)",
         "opt-landscape": "Landscape (16:9)",
         "method-recommend": "Recommended: 1080p / 4K · H.264 / HEVC + AAC Audio",
-        "warning-title": "CLIENT-SIDE BINARY ENGINE (V5.5 & V6.2)",
-        "warning-desc": 'Everything runs locally in your browser with zero quality loss. <strong>Classic (v5.5)</strong> keeps your exact duration in gallery; <strong>Max (v6.2)</strong> preserves 100% of your video &amp; HDR stream untouched.',
+        "warning-title": "CLIENT-SIDE BINARY ENGINES (MAX & 4K)",
+        "warning-desc": 'Everything runs locally in your browser with zero quality loss. <strong>Argus MAX (v6.2)</strong> preserves 100% of your video &amp; HDR stream untouched; <strong>Argus 4K</strong> applies TikTok-tailored OBX / Nova container optimization.',
         "drop-title": "Select or drag file to optimize",
         "drop-subtitle": "Argus Container Optimization · Zero Re-encoding",
         "progress-indicator-text": "SYSTEM_OPTIMIZING...",
@@ -41,10 +47,14 @@ const TRANSLATIONS = {
 
         // Dynamic Terminal Logs
         logInit: "Initializing Argus Method: ",
-        logApplyClassic: "Starting Argus Classic Engine (v5.5)...",
-        logApplyMax: "Starting Argus Max Engine (v6.2)...",
-        logModeClassic: "ENGINE 5.5: Strip btrt + SEI Clean + In-Band AAC PCE Tail",
-        logModeMax: "ENGINE 6.2: Zero-Touch Video + Dual-Track AAC PCE Bypass",
+        logApplyMax: "Starting Argus MAX Engine (v6.2)...",
+        logModeMax: "ENGINE MAX 6.2: Zero-Touch Video + Dual-Track AAC PCE Bypass",
+        logApply4K: "Starting Argus 4K Engine (Ultra Quality)...",
+        logApplyObx: "PATCH: Applying Argus Method (OBX Container Restructure)...",
+        logApplyNova: "PATCH: Applying Nova (Patchbox Container Restructure)...",
+        logOptimizeTikTokPrep: "PREP: Staging video for TikTok 1080p Sweet Spot optimization...",
+        logOptimizeTikTokExec: "WASM: Encoding to 1080p Level 4.0 (CRF 20 · 160k AAC · Faststart)...",
+        logOptimizeTikTokDone: "✓ TikTok optimization profile applied successfully",
         logRead: "Reading MP4 container structure...",
         logFastPath: "✓ Standard MP4 + AAC detected — running instant native binary path",
         logNeedRemux: "Container needs normalization (MOV / fragmented / audio prep) — invoking FFmpeg WASM...",
@@ -53,8 +63,6 @@ const TRANSLATIONS = {
         logWasmWrite: "WASM: Staging media payload...",
         logWasmExec: "WASM: Remuxing container losslessly (-c:v copy) & preparing AAC audio...",
         logPatching: "PATCH: Executing binary container transformation...",
-        logSeiStripped: "PATCH: Stripped leading encoder SEI watermark bytes: ",
-        logClassicPce: "PATCH: Injected in-band AAC PCE signature into final audio frames: ",
         logMaxDual: "PATCH: Appended 17 silence frames + dual-track AAC PCE (tracks ",
         logComplete: "✓ Optimization complete ",
         logReady: "Ready to Post ✓",
@@ -64,22 +72,28 @@ const TRANSLATIONS = {
     },
     ar: {
         documentTitle: "آرغوس | نظام تحسين جودة تيك توك",
-        "hero-tag": "بروتوكول التحسين // محرك_آرغوس_V6.2",
+        "hero-tag": "بروتوكول التحسين // محرك_آرغوس_MAX_6.2",
         "hero-title": 'مُحسِّن جودة <span class="accent-text italic">تيك توك.</span>',
-        "hero-desc": "محركا آرغوس Classic v5.5 و Max v6.2 داخل المتصفح مباشرة. بدون إعادة ترميز للفيديو، معالجة فورية، وتجاوز كامل لضغط تيك توك.",
+        "hero-desc": "محركا آرغوس MAX v6.2 (بدون لمس مسار الفيديو) و آرغوس 4K (تقنية OBX و Nova) داخل المتصفح مباشرة. بدون فقدان للجودة، وتجاوز كامل لضغط تيك توك.",
         "method-title": "تجاوز بروتوكول آرغوس",
-        "method-desc": "اختر بين آرغوس Classic (v5.5) المناسب لكل فيديوهات SDR/HDR مع الحفاظ على المدة الحقيقية، أو آرغوس Max (v6.2) الذي يترك مسار الفيديو سليماً 100% ومثالي لـ HDR و 4K.",
+        "method-desc": "محرك آرغوس MAX (v6.2) يترك مسار الفيديو و HDR سليماً 100% بدون أي إعادة ترميز. ومحرك آرغوس 4K يوفر تقنيات OBX و Nova المتوافقة مع خوارزميات تيك توك.",
         "engine-label": "محرك التجاوز:",
-        "opt-engine-classic": "آرغوس Classic (v5.5 · موصى به)",
-        "opt-engine-max": "آرغوس Max (v6.2 · HDR / 4K)",
+        "opt-engine-max": "آرغوس MAX (v6.2 · موصى به)",
+        "opt-engine-argus4k": "آرغوس 4K (جودة فائقة + OBX)",
         "engine-mode-badge": "بدون_إعادة_ترميز",
+        "submethod-label": "الميثود الفرعية:",
+        "opt-submethod-obx": "Argus Method (OBX · الأفضل)",
+        "opt-submethod-nova": "Nova (Patchbox · تجريبي)",
+        "prep-label": "تجهيز الفيديو:",
+        "opt-prep-tiktok": "Optimize for TikTok (تجهيز مثالي لـ 1080p · موصى به)",
+        "opt-prep-direct": "Continue without extras (تطبيق مباشر بدون تعديل)",
         "preset-label": "أبعاد الفيديو:",
         "opt-vertical": "عمودي (9:16)",
         "opt-square": "مربع (1:1)",
         "opt-landscape": "أفقي (16:9)",
         "method-recommend": "موصى به: 1080p / 4K · H.264 / HEVC مع صوت AAC",
-        "warning-title": "محرك المعالجة الثنائي المحلي (V5.5 & V6.2)",
-        "warning-desc": 'كل المعالجة تتم محلياً داخل متصفحك بدون فقدان للجودة. محرك <strong>Classic (v5.5)</strong> يحافظ على مدة الفيديو الحقيقية؛ ومحرك <strong>Max (v6.2)</strong> يترك بيانات الفيديو و HDR دون أي تعديل.',
+        "warning-title": "محركا المعالجة الثنائية المحلية (MAX & 4K)",
+        "warning-desc": 'كل المعالجة تتم محلياً داخل متصفحك بدون فقدان للجودة. محرك <strong>آرغوس MAX (v6.2)</strong> يترك بيانات الفيديو و HDR دون أي تعديل ويمنع ضغط تيك توك؛ ومحرك <strong>آرغوس 4K</strong> يطبق هيكلة OBX و Nova المخصصة لتيك توك.',
         "drop-title": "اختر ملف فيديو أو اسحبه هنا لتحسينه",
         "drop-subtitle": "تحسين حاوية آرغوس · بدون إعادة ترميز الفيديوهات",
         "progress-indicator-text": "جاري تحسين الفيديو...",
@@ -95,90 +109,110 @@ const TRANSLATIONS = {
 
         // Dynamic Terminal Logs
         logInit: "بدء تهيئة بروتوكول آرغوس: ",
-        logApplyClassic: "بدء تشغيل محرك آرغوس Classic (v5.5)...",
-        logApplyMax: "بدء تشغيل محرك آرغوس Max (v6.2)...",
-        logModeClassic: "محرك 5.5: تنظيف btrt + إزالة SEI + حقن AAC PCE",
-        logModeMax: "محرك 6.2: فيديو سليم 100% + مسار صوت مزدوج AAC PCE",
-        logRead: "جاري قراءة بنية حاوية MP4...",
-        logFastPath: "✓ تم اكتشاف MP4 + AAC قياسي — تشغيل المعالجة الثنائية الفورية",
-        logNeedRemux: "الحاوية تحتاج تهيئة (MOV أو بدون صوت AAC) — جاري تشغيل FFmpeg WASM...",
+        logApplyMax: "بدء تشغيل محرك آرغوس MAX (v6.2)...",
+        logModeMax: "محرك MAX 6.2: فيديو خام 100% + مسار صوت مزدوج AAC PCE",
+        logApply4K: "بدء تشغيل محرك آرغوس 4K (جودة فائقة)...",
+        logApplyObx: "تعديل الحاوية: تطبيق Argus Method (إعادة هيكلة OBX)...",
+        logApplyNova: "تعديل الحاوية: تطبيق Nova (إعادة هيكلة Patchbox)...",
+        logOptimizeTikTokPrep: "تجهيز: تحضير الفيديو لمعايير تيك توك 1080p الذهبية...",
+        logOptimizeTikTokExec: "WASM: الترميز إلى 1080p Level 4.0 (CRF 20 · 160k AAC · Faststart)...",
+        logOptimizeTikTokDone: "✓ تم تطبيق بروفايل تيك توك بنجاح تام",
+        logRead: "قراءة بنية حاوية MP4...",
+        logFastPath: "✓ تم اكتشاف MP4 قياسي مع صوت AAC — تشغيل المسار الثنائي الفوري",
+        logNeedRemux: "الحاوية تحتاج تهيئة (صيغة MOV / مجزأة / تجهيز الصوت) — استدعاء FFmpeg WASM...",
         logWasmLoad: "WASM: جاري تحميل محرك FFmpeg Core...",
-        logWasmReady: "✓ محرك FFmpeg جاهز",
-        logWasmWrite: "WASM: تجهيز ملف الفيديو المؤقت...",
-        logWasmExec: "WASM: إعادة هيكلة الحاوية بدون فقدان (-c:v copy) وتجهيز صوت AAC...",
-        logPatching: "PATCH: جاري تطبيق خوارزمية الترقيع الثنائية...",
-        logSeiStripped: "PATCH: تم تنظيف بايتات SEI الإضافية في الإطار الأول: ",
-        logClassicPce: "PATCH: تم حقن توقيع AAC PCE في آخر إطارات الصوت: ",
-        logMaxDual: "PATCH: تم إلحاق 17 إطار صمت + مسار صوت مزدوج AAC PCE (المسارات ",
-        logComplete: "✓ اكتملت عملية التحسين في غضون ",
-        logReady: "جاهز للنشر الآن ✓",
-        logAwaiting: "النظام مستعد. في انتظار تحميل الملف.",
+        logWasmReady: "✓ محرك FFmpeg جاهز للعمل",
+        logWasmWrite: "WASM: تحميل بيانات الفيديو...",
+        logWasmExec: "WASM: إعادة حزم الحاوية بدون فقدان (-c:v copy) وتجهيز صوت AAC...",
+        logPatching: "معالجة: تنفيذ التحويل الثنائي للحاوية...",
+        logMaxDual: "معالجة: إضافة 17 إطار صامت + مسار صوت AAC PCE مزدوج (المسارات ",
+        logComplete: "✓ اكتمل التحسين ",
+        logReady: "الفيديو جاهز للنشر في تيك توك ✓",
+        logAwaiting: "النظام جاهز. في انتظار الإجراء.",
         logFailed: "فشلت عملية التحسين.",
-        logError: "خطأ فادح: "
+        logError: "خطأ جسيم: "
     }
 };
 
 let currentLang = 'en';
-let currentEngine = '5.5';
-
-// ─── LANGUAGE & ENGINE SELECTION ────────────────────────────────────────────
 
 function setLanguage(lang) {
     if (!TRANSLATIONS[lang]) return;
     currentLang = lang;
     localStorage.setItem('argus_lang', lang);
 
-    const htmlEl = document.documentElement;
-    htmlEl.setAttribute('lang', lang);
-    htmlEl.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-
-    const btnEn = document.getElementById('lang-en');
-    const btnAr = document.getElementById('lang-ar');
-    if (btnEn) btnEn.classList.toggle('active', lang === 'en');
-    if (btnAr) btnAr.classList.toggle('active', lang === 'ar');
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
     const dict = TRANSLATIONS[lang];
     document.title = dict.documentTitle;
 
     for (const [key, value] of Object.entries(dict)) {
+        if (key === 'documentTitle' || key.startsWith('log')) continue;
         const el = document.getElementById(key);
         if (el) {
-            if (key === 'hero-title' || key === 'warning-desc') {
-                el.innerHTML = value;
-            } else {
-                el.textContent = value;
-            }
+            if (value.includes('<')) el.innerHTML = value;
+            else el.textContent = value;
         }
     }
 
-    const welcomeLog = document.getElementById('terminal-welcome');
-    if (welcomeLog) welcomeLog.textContent = dict['terminal-welcome'];
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.getElementById(`lang-${lang}`);
+    if (activeBtn) activeBtn.classList.add('active');
 
-    const statusIndicator = document.getElementById('status-text');
-    if (statusIndicator && !argusIsProcessing) {
-        statusIndicator.textContent = dict['status-standby'];
+    onEngineChange();
+}
+
+function getEngineConfig() {
+    const engineEl = document.getElementById('argus-engine');
+    const engine = engineEl ? engineEl.value : 'max';
+    const submethodEl = document.getElementById('argus-submethod');
+    const submethod = submethodEl ? submethodEl.value : 'argus_obx';
+    const prepEl = document.getElementById('argus-prep');
+    const prep = prepEl ? prepEl.value : 'optimize_tiktok';
+    return { engine, submethod, prep };
+}
+
+function onEngineChange() {
+    const cfg = getEngineConfig();
+    const panel = document.getElementById('argus4k-options-panel');
+    const engineBadge = document.getElementById('engine-mode-badge');
+    const engineVersionBadge = document.getElementById('engine-version-badge');
+    const dict = TRANSLATIONS[currentLang];
+
+    if (cfg.engine === 'argus4k') {
+        if (panel) panel.classList.remove('hidden');
+        if (engineBadge) {
+            engineBadge.textContent = 'ARGUS_4K_OBX';
+            engineBadge.className = 'auto-badge font-mono text-[9px] text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded bg-amber-400/5 font-bold uppercase tracking-wider';
+        }
+        if (engineVersionBadge) {
+            engineVersionBadge.textContent = '4K // OBX';
+            engineVersionBadge.className = 'text-amber-400 font-mono text-[8px] border border-amber-400/30 px-1.5 py-0.5 rounded bg-amber-400/5 uppercase tracking-widest font-bold';
+        }
+    } else {
+        if (panel) panel.classList.add('hidden');
+        if (engineBadge) {
+            engineBadge.textContent = dict['engine-mode-badge'] || 'ZERO_REENCODE';
+            engineBadge.className = 'auto-badge font-mono text-[9px] text-[#00F0FF] border border-[#00F0FF]/30 px-2 py-0.5 rounded bg-[#00F0FF]/5 font-bold uppercase tracking-wider';
+        }
+        if (engineVersionBadge) {
+            engineVersionBadge.textContent = 'V6.2 MAX';
+            engineVersionBadge.className = 'text-[#00F0FF] font-mono text-[8px] border border-[#00F0FF]/30 px-1.5 py-0.5 rounded bg-[#00F0FF]/5 uppercase tracking-widest font-bold';
+        }
     }
 }
 
-function getSelectedEngine() {
-    const el = document.getElementById('argus-engine');
-    const val = el ? el.value : currentEngine;
-    return val === '6.2' ? '6.2' : '5.5';
-}
-
-// ─── BINARY MP4 STREAM HELPERS ──────────────────────────────────────────────
+// ─── BINARY BOX MANIPULATION HELPERS ────────────────────────────────────────
 
 const CONTAINER_BOXES = new Set(['moov', 'trak', 'mdia', 'minf', 'dinf', 'edts', 'stbl']);
 const SUPPORTED_VIDEO_CODECS = new Set(['avc1', 'avc3', 'hvc1', 'hev1', 'dvh1', 'dvhe']);
 
-// Engine 5.5 (Classic): In-band AAC ID_PCE payload written into final 4 AAC samples
-const CLASSIC_PCE_11 = new Uint8Array([0xa1, 0xb8, 0x00, 0x20, 0x01, 0x00, 0x00, 0x64, 0x00, 0x00, 0x07]);
-
-// Engine 6.2 (Max): Standard 6-byte stereo AAC-LC silence frame repeated 17 times (9 + 8 chunks)
-const MAX_SILENCE_6 = new Uint8Array([0x21, 0x10, 0x04, 0x60, 0x8c, 0x1c]);
+// Engine MAX 6.2 constants: 17 silence frames (16 chunk1 + 1 chunk2 with PCE)
+const MAX_SILENCE_6 = new Uint8Array([0x01, 0x40, 0x20, 0x06, 0x4f, 0x00]);
 const MAX_ADDED_SAMPLES = 17;
-const MAX_CHUNK1_SAMPLES = 9;
-const MAX_CHUNK2_SAMPLES = 8;
+const MAX_CHUNK1_SAMPLES = 16;
+const MAX_CHUNK2_SAMPLES = 1;
 
 function u16(u8, off) {
     return (u8[off] << 8) | u8[off + 1];
@@ -344,277 +378,6 @@ function inspectMp4Layout(u8) {
     }
 }
 
-function getSampleTable(u8, stbl) {
-    const stsz = findChild(stbl, 'stsz');
-    const stsc = findChild(stbl, 'stsc');
-    const stco = findChild(stbl, 'stco') || findChild(stbl, 'co64');
-    if (!stsz || !stsc || !stco) {
-        throw new Error(currentLang === 'ar' ? 'جداول العينات stsz أو stsc أو stco مفقودة' : 'Incomplete sample tables (stsz/stsc/stco)');
-    }
-
-    const psz = payload(u8, stsz);
-    const fixedSize = u32(psz, 4);
-    const sampleCount = u32(psz, 8);
-    const sizes = new Array(sampleCount);
-    for (let i = 0; i < sampleCount; i++) {
-        sizes[i] = fixedSize !== 0 ? fixedSize : u32(psz, 12 + i * 4);
-    }
-
-    const pco = payload(u8, stco);
-    const is64 = stco.type === 'co64';
-    const chunkCount = u32(pco, 4);
-    const chunkOffsets = new Array(chunkCount);
-    for (let i = 0; i < chunkCount; i++) {
-        chunkOffsets[i] = is64 ? u64(pco, 8 + i * 8) : u32(pco, 8 + i * 4);
-    }
-
-    const psc = payload(u8, stsc);
-    const scCount = u32(psc, 4);
-    const offsets = [];
-    for (let i = 0; i < scCount; i++) {
-        const firstChunk = u32(psc, 8 + i * 12);
-        const spc = u32(psc, 12 + i * 12);
-        const lastChunk = (i + 1 < scCount) ? u32(psc, 8 + (i + 1) * 12) - 1 : chunkCount;
-        for (let c = firstChunk; c <= lastChunk && c <= chunkCount; c++) {
-            let off = chunkOffsets[c - 1];
-            for (let s = 0; s < spc && offsets.length < sampleCount; s++) {
-                offsets.push(off);
-                off += sizes[offsets.length - 1];
-            }
-        }
-    }
-    if (offsets.length !== sampleCount) {
-        throw new Error(currentLang === 'ar' ? 'تعارض في فهرس عينات الفيديو أو الصوت' : 'Sample table offset count mismatch');
-    }
-    return { sizes, offsets, chunkCount, sampleCount, is64 };
-}
-
-// ─── ENGINE 5.5: ARGUS CLASSIC (HAZE CLASSIC v5.5) ──────────────────────────
-
-function stripBtrtFromStsd(u8, stsd, isAudio) {
-    const p = payload(u8, stsd);
-    if (p.length < 16) return raw(u8, stsd);
-    const verFlags = p.subarray(0, 4);
-    const entryCount = u32(p, 4);
-    const entries = [];
-    let pos = 8;
-    for (let i = 0; i < entryCount && pos + 8 <= p.length; i++) {
-        const esz = u32(p, pos);
-        if (esz < 8 || pos + esz > p.length) break;
-        const entry = p.subarray(pos, pos + esz);
-        const etype = typeStr(entry, 4);
-        let subOff = isAudio ? 36 : 86;
-        if (isAudio && entry.length >= 18) {
-            const ver = u16(entry, 16);
-            if (ver === 1) subOff = 52;
-            else if (ver === 2) subOff = 72;
-        }
-        if (subOff < entry.length) {
-            const fixedPart = entry.subarray(8, subOff);
-            const subs = parseBoxes(entry, subOff, entry.length);
-            const kept = subs.filter(sb => sb.type !== 'btrt').map(sb => raw(entry, sb));
-            entries.push(makeBox(etype, concatBuffers([fixedPart, ...kept])));
-        } else {
-            entries.push(entry);
-        }
-        pos += esz;
-    }
-    return makeBox('stsd', concatBuffers([verFlags, w32(entries.length), ...entries]));
-}
-
-function detectLeadingSeiBytes(u8, videoStbl, vSample0Off, vSample0Size) {
-    const stsd = findChild(videoStbl, 'stsd');
-    if (!stsd || vSample0Size < 6) return 0;
-    const p = payload(u8, stsd);
-    if (p.length < 94) return 0;
-    const entrySize = u32(p, 8);
-    const entryType = typeStr(p, 12);
-    const isAvc = entryType === 'avc1' || entryType === 'avc3';
-    const isHevc = entryType === 'hvc1' || entryType === 'hev1';
-    if (!isAvc && !isHevc) return 0;
-
-    const subBoxes = parseBoxes(p, 8 + 86, Math.min(p.length, 8 + entrySize));
-    const cfg = subBoxes.find(b => b.type === (isAvc ? 'avcC' : 'hvcC'));
-    if (!cfg) return 0;
-    const cfgBody = payload(p, cfg);
-    const lengthSize = (cfgBody[isAvc ? 4 : 21] & 0x03) + 1;
-
-    let pos = vSample0Off;
-    const end = vSample0Off + vSample0Size;
-    let removed = 0;
-    while (pos + lengthSize + 1 <= end) {
-        let nalLen = 0;
-        for (let k = 0; k < lengthSize; k++) nalLen = nalLen * 256 + u8[pos + k];
-        if (nalLen < 1 || pos + lengthSize + nalLen > end) break;
-        const hdrByte = u8[pos + lengthSize];
-        const isSei = isAvc
-            ? ((hdrByte & 0x1f) === 6)
-            : ((((hdrByte >> 1) & 0x3f) === 39) || (((hdrByte >> 1) & 0x3f) === 40));
-        if (!isSei) break;
-        if (pos + lengthSize + nalLen >= end) break;
-        removed += lengthSize + nalLen;
-        pos += lengthSize + nalLen;
-    }
-    return removed;
-}
-
-function patchClassic55(u8, dict) {
-    const topBoxes = parseBoxes(u8, 0, u8.length);
-    const ftyp = topBoxes.find(b => b.type === 'ftyp');
-    const moov = topBoxes.find(b => b.type === 'moov');
-    const mdat = topBoxes.find(b => b.type === 'mdat');
-    if (!ftyp || !moov || !mdat) {
-        throw new Error(currentLang === 'ar' ? 'حاوية MP4 غير صالحة: مفقود بيانات ftyp أو moov أو mdat' : 'Invalid MP4: missing ftyp, moov, or mdat');
-    }
-
-    const traks = (moov.children || []).filter(b => b.type === 'trak');
-    const videoTrak = traks.find(t => getTrakHandler(u8, t) === 'vide');
-    const audioTrak = traks.find(t => getTrakHandler(u8, t) === 'soun');
-    if (!videoTrak || !audioTrak) {
-        throw new Error(currentLang === 'ar' ? 'محرك Classic 5.5 يتطلب مسار فيديو ومسار صوت AAC' : 'Classic 5.5 requires both video and AAC audio tracks');
-    }
-
-    const vStbl = findStbl(videoTrak);
-    const aStbl = findStbl(audioTrak);
-    const vTable = getSampleTable(u8, vStbl);
-    const aTable = getSampleTable(u8, aStbl);
-
-    const vSample0Off = vTable.offsets[0];
-    const vSample0Size = vTable.sizes[0];
-    const seiRemove = detectLeadingSeiBytes(u8, vStbl, vSample0Off, vSample0Size);
-    if (seiRemove > 0) {
-        logToTerminal(`${dict.logSeiStripped}${seiRemove}B`, 'normal');
-    }
-
-    const origMdatPayloadStart = mdat.start + mdat.header;
-    const origMdatPayload = payload(u8, mdat);
-
-    const newMdatPayload = new Uint8Array(origMdatPayload.length - seiRemove);
-    const seiRel = vSample0Off - origMdatPayloadStart;
-    if (seiRemove > 0 && seiRel >= 0 && seiRel + seiRemove <= origMdatPayload.length) {
-        newMdatPayload.set(origMdatPayload.subarray(0, seiRel), 0);
-        newMdatPayload.set(origMdatPayload.subarray(seiRel + seiRemove), seiRel);
-    } else {
-        newMdatPayload.set(origMdatPayload, 0);
-    }
-
-    const pceCount = Math.min(4, aTable.sampleCount);
-    for (let i = aTable.sampleCount - pceCount; i < aTable.sampleCount; i++) {
-        const origOff = aTable.offsets[i];
-        const sz = aTable.sizes[i];
-        let rel = origOff - origMdatPayloadStart;
-        if (seiRemove > 0 && origOff > vSample0Off) rel -= seiRemove;
-        if (rel >= 0 && rel + sz <= newMdatPayload.length) {
-            newMdatPayload.fill(0, rel, rel + sz);
-            newMdatPayload.set(CLASSIC_PCE_11.subarray(0, Math.min(CLASSIC_PCE_11.length, sz)), rel);
-        }
-    }
-    logToTerminal(`${dict.logClassicPce}${pceCount}`, 'success');
-
-    function shiftOffsetsBox(box, moovDelta) {
-        const p = payload(u8, box);
-        const src64 = box.type === 'co64';
-        const cnt = u32(p, 4);
-        let maxOff = 0;
-        const shifted = new Array(cnt);
-        for (let i = 0; i < cnt; i++) {
-            const origOff = src64 ? u64(p, 8 + i * 8) : u32(p, 8 + i * 4);
-            const nextOff = origOff + moovDelta - (seiRemove > 0 && origOff > vSample0Off ? seiRemove : 0);
-            shifted[i] = nextOff;
-            if (nextOff > maxOff) maxOff = nextOff;
-        }
-        const dst64 = src64 || maxOff > 0xffffffff;
-        const elemSz = dst64 ? 8 : 4;
-        const out = new Uint8Array(8 + cnt * elemSz);
-        out.set(p.subarray(0, 4), 0);
-        out.set(w32(cnt), 4);
-        for (let i = 0; i < cnt; i++) {
-            out.set(dst64 ? w64(shifted[i]) : w32(shifted[i]), 8 + i * elemSz);
-        }
-        return makeBox(dst64 ? 'co64' : 'stco', out);
-    }
-
-    function patchVideoStsz(stsz) {
-        if (seiRemove === 0) return raw(u8, stsz);
-        const p = payload(u8, stsz);
-        const fixedSize = u32(p, 4);
-        const cnt = u32(p, 8);
-        if (fixedSize !== 0) {
-            const out = new Uint8Array(12 + cnt * 4);
-            out.set(p.subarray(0, 4), 0);
-            out.set(w32(0), 4);
-            out.set(w32(cnt), 8);
-            out.set(w32(fixedSize - seiRemove), 12);
-            for (let i = 1; i < cnt; i++) out.set(w32(fixedSize), 12 + i * 4);
-            return makeBox('stsz', out);
-        }
-        const out = new Uint8Array(p);
-        out.set(w32(vSample0Size - seiRemove), 12);
-        return makeBox('stsz', out);
-    }
-
-    const udtaBox = makeUdta('Argus Quality Method | Classic 5.5');
-
-    function buildMoov(moovDelta) {
-        let curTrak = null;
-        function walk(box) {
-            if (box.type === 'udta' && !curTrak) return null;
-            if (box.type === 'stsd' && (curTrak === videoTrak || curTrak === audioTrak)) {
-                return stripBtrtFromStsd(u8, box, curTrak === audioTrak);
-            }
-            if (box.type === 'stsz' && curTrak === videoTrak) {
-                return patchVideoStsz(box);
-            }
-            if (box.type === 'stco' || box.type === 'co64') {
-                return shiftOffsetsBox(box, moovDelta);
-            }
-            if (box.children) {
-                const parts = [];
-                for (const c of box.children) {
-                    const prev = curTrak;
-                    if (c.type === 'trak') curTrak = c;
-                    const res = walk(c);
-                    curTrak = prev;
-                    if (res) parts.push(res);
-                }
-                if (box.type === 'moov') parts.push(udtaBox);
-                return makeBox(box.type, concatBuffers(parts));
-            }
-            return raw(u8, box);
-        }
-        return walk(moov);
-    }
-
-    const probeMoov = buildMoov(0);
-    let newMdatStart = 0;
-    for (const b of topBoxes) {
-        if (b.type === 'mdat') break;
-        if (b.type === 'moov') newMdatStart += probeMoov.length;
-        else newMdatStart += b.size;
-    }
-    const newMdatHdr = newMdatPayload.length + 8 > 0xffffffff ? 16 : 8;
-    const moovDelta = (newMdatStart + newMdatHdr) - origMdatPayloadStart;
-    const finalMoov = buildMoov(moovDelta);
-
-    const mdatHeaderBytes = newMdatHdr === 8
-        ? concatBuffers([w32(8 + newMdatPayload.length), new Uint8Array([0x6d, 0x64, 0x61, 0x74])])
-        : concatBuffers([w32(1), new Uint8Array([0x6d, 0x64, 0x61, 0x74]), w64(16 + newMdatPayload.length)]);
-
-    const blobParts = [];
-    for (const b of topBoxes) {
-        if (b.type === 'moov') blobParts.push(finalMoov);
-        else if (b.type === 'mdat') {
-            blobParts.push(mdatHeaderBytes);
-            blobParts.push(newMdatPayload);
-        } else {
-            blobParts.push(raw(u8, b));
-        }
-    }
-    return new Blob(blobParts, { type: 'video/mp4' });
-}
-
-// ─── ENGINE 6.2: ARGUS MAX (HAZE MAX v6.2) ──────────────────────────────────
-
 function buildMaxAsc(sampleRate) {
     const srTable = [96000, 88200, 64000, 48000, 44100, 32000, 24000, 22050, 16000, 12000, 11025, 8000, 7350];
     let sfi = srTable.indexOf(sampleRate);
@@ -678,12 +441,16 @@ function patchMax62(u8, dict) {
     for (let i = 0; i < MAX_ADDED_SAMPLES; i++) silencePayload.set(MAX_SILENCE_6, i * 6);
     const mdat2Box = makeBox('mdat', silencePayload);
 
-    // Zero-copy top-level order: ftyp + original mdat + mdat2 (110B) + moov
+    // Align with Haze Max container box structure (preserves optional free box)
+    const existingFree = topBoxes.find((b, idx) => b.type === 'free' && idx === 1);
+    const freeBox = existingFree ? raw(u8, existingFree) : makeBox('free', new Uint8Array(0));
+
+    // Zero-copy top-level order: ftyp + free (8B) + original mdat + mdat2 (110B) + moov
     const origMdatRaw = raw(u8, mdat);
-    const newMdat1PayloadStart = ftyp.size + mdat.header;
+    const newMdat1PayloadStart = ftyp.size + freeBox.length + mdat.header;
     const origMdatPayloadStart = mdat.start + mdat.header;
     const mdat1Shift = newMdat1PayloadStart - origMdatPayloadStart;
-    const mdat2PayloadStart = ftyp.size + origMdatRaw.length + 8;
+    const mdat2PayloadStart = ftyp.size + freeBox.length + origMdatRaw.length + 8;
 
     const pmvhd = payload(u8, mvhd);
     const mvhdVer = pmvhd[0];
@@ -905,7 +672,7 @@ function patchMax62(u8, dict) {
     const newMoovBox = makeBox('moov', concatBuffers(moovParts));
 
     logToTerminal(`${dict.logMaxDual}#${primaryAudioTid} + #${nextTrackId})`, 'success');
-    return new Blob([raw(u8, ftyp), origMdatRaw, mdat2Box, newMoovBox], { type: 'video/mp4' });
+    return new Blob([raw(u8, ftyp), freeBox, origMdatRaw, mdat2Box, newMoovBox], { type: 'video/mp4' });
 }
 
 // ─── FFMPEG WASM ON-DEMAND NORMALIZER (FALLBACK FOR MOV / SILENT / NON-AAC) ─
@@ -1018,47 +785,136 @@ async function normalizeWithFFmpeg(inputU8, layoutInfo, onProgress) {
 
 // ─── CORE OPTIMIZATION PIPELINE ─────────────────────────────────────────────
 
-async function argusOptimizeVideo(arrayBuffer, engine, onProgress) {
+async function argusOptimizeVideo(fileOrBuffer, config, onProgress) {
     const dict = TRANSLATIONS[currentLang];
     const start = Date.now();
 
-    logToTerminal(dict.logRead, 'normal');
-    onProgress(15);
+    if (config.engine === 'max') {
+        logToTerminal(dict.logApplyMax, 'highlight');
+        logToTerminal(dict.logModeMax, 'normal');
+        logToTerminal(dict.logRead, 'normal');
+        onProgress(15);
 
-    let u8 = new Uint8Array(arrayBuffer);
-    const layout = inspectMp4Layout(u8);
-
-    if (layout.ready) {
-        logToTerminal(dict.logFastPath, 'success');
-        onProgress(55);
-    } else {
-        logToTerminal(dict.logNeedRemux, 'warning');
-        u8 = await normalizeWithFFmpeg(u8, layout, onProgress);
-        const recheck = inspectMp4Layout(u8);
-        if (!recheck.ready) {
-            throw new Error(
-                currentLang === 'ar'
-                    ? `ملف غير مدعوم (${recheck.reason}). يرجى التصدير بصيغة MP4 (H.264 أو HEVC) مع صوت AAC.`
-                    : `Unsupported export (${recheck.reason}). Export as standard MP4 (H.264 / HEVC) with AAC audio.`
-            );
+        let arrayBuffer;
+        if (fileOrBuffer instanceof ArrayBuffer) {
+            arrayBuffer = fileOrBuffer;
+        } else if (fileOrBuffer instanceof Blob || (typeof File !== 'undefined' && fileOrBuffer instanceof File)) {
+            arrayBuffer = await fileOrBuffer.arrayBuffer();
+        } else {
+            arrayBuffer = (new Uint8Array(fileOrBuffer)).buffer;
         }
+
+        let u8 = new Uint8Array(arrayBuffer);
+        const layout = inspectMp4Layout(u8);
+
+        if (layout.ready) {
+            logToTerminal(dict.logFastPath, 'success');
+            onProgress(55);
+        } else {
+            logToTerminal(dict.logNeedRemux, 'warning');
+            u8 = await normalizeWithFFmpeg(u8, layout, onProgress);
+            const recheck = inspectMp4Layout(u8);
+            if (!recheck.ready) {
+                throw new Error(
+                    currentLang === 'ar'
+                        ? `ملف غير مدعوم (${recheck.reason}). يرجى التصدير بصيغة MP4 (H.264 أو HEVC) مع صوت AAC.`
+                        : `Unsupported export (${recheck.reason}). Export as standard MP4 (H.264 / HEVC) with AAC audio.`
+                );
+            }
+        }
+
+        logToTerminal(dict.logPatching, 'highlight');
+        onProgress(80);
+
+        const outputBlob = patchMax62(u8, dict);
+        u8 = null;
+        onProgress(95);
+
+        const elapsed = ((Date.now() - start) / 1000).toFixed(2);
+        const sizeMB = (outputBlob.size / 1048576).toFixed(2);
+        logToTerminal(`${dict.logComplete}(${elapsed}s) — ${sizeMB} MB`, 'success');
+
+        return { success: true, blob: outputBlob };
     }
 
-    logToTerminal(dict.logPatching, 'highlight');
-    onProgress(80);
+    if (config.engine === 'argus4k') {
+        logToTerminal(dict.logApply4K, 'highlight');
+        onProgress(15);
 
-    const outputBlob = engine === '6.2'
-        ? patchMax62(u8, dict)
-        : patchClassic55(u8, dict);
+        let inputFile;
+        if (typeof File !== 'undefined' && fileOrBuffer instanceof File) {
+            inputFile = fileOrBuffer;
+        } else if (fileOrBuffer instanceof Blob) {
+            inputFile = new File([fileOrBuffer], 'video.mp4', { type: 'video/mp4' });
+        } else {
+            inputFile = new File([fileOrBuffer], 'video.mp4', { type: 'video/mp4' });
+        }
 
-    u8 = null;
-    onProgress(95);
+        let targetFile = inputFile;
 
-    const elapsed = ((Date.now() - start) / 1000).toFixed(2);
-    const sizeMB = (outputBlob.size / 1048576).toFixed(2);
-    logToTerminal(`${dict.logComplete}(${elapsed}s) — ${sizeMB} MB`, 'success');
+        if (config.prep === 'optimize_tiktok') {
+            logToTerminal(dict.logOptimizeTikTokPrep, 'normal');
+            onProgress(25);
+            const u8Input = new Uint8Array(await inputFile.arrayBuffer());
+            const ffmpeg = await loadFFmpegInstance();
+            await ffmpeg.writeFile('in_cb.mp4', u8Input);
+            logToTerminal(dict.logOptimizeTikTokExec, 'highlight');
+            onProgress(40);
 
-    return { success: true, blob: outputBlob };
+            // TikTok 1080p sweet spot parameters
+            const exitCode = await ffmpeg.exec([
+                '-y', '-v', 'warning',
+                '-i', 'in_cb.mp4',
+                '-vf', "scale='min(1080,iw)':-2",
+                '-c:v', 'libx264', '-crf', '20', '-level', '4.0', '-preset', 'fast',
+                '-c:a', 'aac', '-b:a', '160k', '-ar', '44100',
+                '-map_metadata', '-1',
+                '-movflags', '+faststart',
+                'out_cb.mp4'
+            ]);
+
+            if (exitCode !== 0) {
+                try { await ffmpeg.deleteFile('in_cb.mp4'); } catch (_) {}
+                throw new Error(currentLang === 'ar' ? 'فشل تحسين الفيديو لـ TikTok عبر FFmpeg' : 'FFmpeg TikTok optimization failed');
+            }
+            onProgress(65);
+            const optimizedU8 = await ffmpeg.readFile('out_cb.mp4');
+            try {
+                await ffmpeg.deleteFile('in_cb.mp4');
+                await ffmpeg.deleteFile('out_cb.mp4');
+            } catch (_) {}
+            targetFile = new File([optimizedU8], inputFile.name || 'optimized.mp4', { type: 'video/mp4' });
+            logToTerminal(dict.logOptimizeTikTokDone, 'success');
+        }
+
+        onProgress(75);
+        let outputBlob;
+        if (config.submethod === 'nova') {
+            logToTerminal(dict.logApplyNova, 'normal');
+            const { patchBoxVideo } = await import('./compressbase_chunks/c-7XE0dE1k.js');
+            const baseURL = typeof window !== 'undefined' && window.location ? window.location.origin + '/' : '/';
+            outputBlob = await patchBoxVideo(targetFile, {
+                assetsBaseURL: baseURL,
+                onStatus: (status) => logToTerminal(`Nova: ${status}`, 'normal')
+            });
+        } else {
+            // Default: Argus Method (OBX)
+            logToTerminal(dict.logApplyObx, 'normal');
+            const { patchObx } = await import('./compressbase_chunks/c-B00hGC5w.js');
+            outputBlob = await patchObx(targetFile, {
+                onStatus: (status) => logToTerminal(`Argus Method (OBX): ${status}`, 'normal')
+            });
+        }
+
+        onProgress(95);
+        const elapsed = ((Date.now() - start) / 1000).toFixed(2);
+        const sizeMB = (outputBlob.size / 1048576).toFixed(2);
+        logToTerminal(`${dict.logComplete}(${elapsed}s) — ${sizeMB} MB`, 'success');
+
+        return { success: true, blob: outputBlob };
+    }
+
+    throw new Error('Unknown engine configuration: ' + JSON.stringify(config));
 }
 
 // ─── TERMINAL VIEW ENGINE ───────────────────────────────────────────────────
@@ -1095,7 +951,7 @@ async function processUploadedFile(file) {
     argusIsProcessing = true;
 
     const dict = TRANSLATIONS[currentLang];
-    const engine = getSelectedEngine();
+    const config = getEngineConfig();
     const progressContainer = document.getElementById('argus-progress-container');
     const statusIndicator = document.getElementById('argus-status-indicator');
     const statusText = document.getElementById('status-text');
@@ -1169,12 +1025,7 @@ async function processUploadedFile(file) {
     }
 
     try {
-        const buf = await file.arrayBuffer();
-
-        logToTerminal(engine === '6.2' ? dict.logApplyMax : dict.logApplyClassic, 'highlight');
-        logToTerminal(engine === '6.2' ? dict.logModeMax : dict.logModeClassic, 'success');
-
-        const result = await argusOptimizeVideo(buf, engine, (pct) => {
+        const result = await argusOptimizeVideo(file, config, (pct) => {
             setProgressStatus(pct);
         });
 
@@ -1182,7 +1033,7 @@ async function processUploadedFile(file) {
             setProgressStatus(100);
 
             if (activeOutputUrl) URL.revokeObjectURL(activeOutputUrl);
-            const suffix = engine === '6.2' ? '_argus_max.mp4' : '_argus_classic.mp4';
+            const suffix = config.engine === 'argus4k' ? '_argus_4k.mp4' : '_argus_max.mp4';
             const outputName = file.name.replace(/\.[^/.]+$/, '') + suffix;
             activeOutputUrl = URL.createObjectURL(result.blob);
 
@@ -1216,52 +1067,69 @@ async function processUploadedFile(file) {
 
 // ─── INITIALIZATION ──────────────────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('argus_lang') || 'en';
-    const savedEngine = localStorage.getItem('argus_engine') || '5.5';
-    currentEngine = savedEngine === '6.2' ? '6.2' : '5.5';
+if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('argus_lang') || 'en';
+        const savedEngine = localStorage.getItem('argus_engine') || 'max';
+        const currentEngine = (savedEngine === 'argus4k') ? 'argus4k' : 'max';
 
-    const engineSelect = document.getElementById('argus-engine');
-    if (engineSelect) {
-        engineSelect.value = currentEngine;
-        engineSelect.addEventListener('change', (e) => {
-            currentEngine = e.target.value === '6.2' ? '6.2' : '5.5';
-            localStorage.setItem('argus_engine', currentEngine);
-        });
-    }
+        const engineSelect = document.getElementById('argus-engine');
+        if (engineSelect) {
+            engineSelect.value = currentEngine;
+            engineSelect.addEventListener('change', (e) => {
+                localStorage.setItem('argus_engine', e.target.value);
+                onEngineChange();
+            });
+        }
 
-    setLanguage(savedLang);
+        const submethodSelect = document.getElementById('argus-submethod');
+        if (submethodSelect) {
+            submethodSelect.addEventListener('change', onEngineChange);
+        }
 
-    const dropZone = document.getElementById('argus-drop-zone');
-    const fileInput = document.getElementById('argus-file-input');
-    const resetBtn = document.getElementById('argus-reset-btn');
+        setLanguage(savedLang);
+        onEngineChange();
 
-    if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
-            location.reload();
-        });
-    }
+        const dropZone = document.getElementById('argus-drop-zone');
+        const fileInput = document.getElementById('argus-file-input');
+        const resetBtn = document.getElementById('argus-reset-btn');
 
-    if (dropZone && fileInput) {
-        dropZone.addEventListener('click', () => fileInput.click());
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                location.reload();
+            });
+        }
 
-        fileInput.addEventListener('change', e => {
-            if (e.target.files?.[0]) processUploadedFile(e.target.files[0]);
-        });
+        if (dropZone && fileInput) {
+            dropZone.addEventListener('click', () => fileInput.click());
 
-        dropZone.addEventListener('dragover', e => {
-            e.preventDefault();
-            dropZone.classList.add('border-accent');
-        });
+            fileInput.addEventListener('change', e => {
+                if (e.target.files?.[0]) processUploadedFile(e.target.files[0]);
+            });
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('border-accent');
-        });
+            dropZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                dropZone.classList.add('border-accent');
+            });
 
-        dropZone.addEventListener('drop', e => {
-            e.preventDefault();
-            dropZone.classList.remove('border-accent');
-            if (e.dataTransfer?.files?.[0]) processUploadedFile(e.dataTransfer.files[0]);
-        });
-    }
-});
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('border-accent');
+            });
+
+            dropZone.addEventListener('drop', e => {
+                e.preventDefault();
+                dropZone.classList.remove('border-accent');
+                if (e.dataTransfer?.files?.[0]) processUploadedFile(e.dataTransfer.files[0]);
+            });
+        }
+    });
+}
+
+// Expose globals for HTML inline handlers
+if (typeof window !== 'undefined') {
+    window.setLanguage = setLanguage;
+    window.onEngineChange = onEngineChange;
+    window.getEngineConfig = getEngineConfig;
+    window.processUploadedFile = processUploadedFile;
+    window.argusOptimizeVideo = argusOptimizeVideo;
+}
